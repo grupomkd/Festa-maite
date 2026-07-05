@@ -26,6 +26,19 @@
   tr:last-child td{ border-bottom:none; }
   .empty{ text-align:center; color:#8a5570; padding:30px 0; }
 </style>
+
+<script id="TIMEOUT_HELPER_V1">
+window.withTimeout = function(promise, ms, label){
+  return Promise.race([
+    promise,
+    new Promise(function(_, reject){
+      setTimeout(function(){
+        reject(new Error('Tempo esgotado (' + (label || 'operacao') + '). Provavel bloqueio de rede/extensao (ex: AdBlock) ou Firestore nao configurado.'));
+      }, ms);
+    })
+  ]);
+};
+</script>
 </head>
 <body>
 
@@ -79,7 +92,7 @@ async function loadData(){
   const wrap = document.getElementById('tableWrap');
   try{
     const q = query(collection(db, 'rsvps_maite4anos'), orderBy('confirmadoEm', 'desc'));
-    const snap = await getDocs(q);
+    const snap = await withTimeout(getDocs(q), 10000, 'carregar confirmacoes');
     rows = [];
     snap.forEach(function(doc){
       const d = doc.data();
