@@ -43,15 +43,15 @@ window.withTimeout = function(promise, ms, label){
 <body>
 
 <div class="gate" id="gate">
-  <h1>Area da familia</h1>
-  <p class="sub">Digite o codigo pra ver quem confirmou presenca</p>
-  <input type="password" id="codeInput" placeholder="Codigo de acesso">
+  <h1>Área da família</h1>
+  <p class="sub">Digite o código pra ver quem confirmou presença</p>
+  <input type="password" id="codeInput" placeholder="Código de acesso">
   <button type="button" id="unlockBtn">Entrar</button>
 </div>
 
 <div id="panel">
-  <h1>Confirmacoes - Maite 4 anos</h1>
-  <p class="sub">Domingo, 02/08/2026 - a partir das 14h</p>
+  <h1>Confirmações - Maitê 4 anos</h1>
+  <p class="sub">Domingo, 02/08/2026 - a partir das 16h30</p>
   <div class="stats">
     <div class="stat"><div class="n" id="totalConfirmados">0</div><div class="l">Confirmados</div></div>
   </div>
@@ -82,7 +82,7 @@ let rows = [];
 
 document.getElementById('unlockBtn').addEventListener('click', async function(){
   const code = document.getElementById('codeInput').value.trim();
-  if(code !== ACCESS_CODE){ alert('Codigo incorreto'); return; }
+  if(code !== ACCESS_CODE){ alert('Código incorreto'); return; }
   document.getElementById('gate').style.display = 'none';
   document.getElementById('panel').style.display = 'block';
   await loadData();
@@ -103,7 +103,7 @@ async function loadData(){
       });
     });
     document.getElementById('totalConfirmados').textContent = rows.length;
-    if(rows.length === 0){ wrap.innerHTML = '<p class="empty">Ninguem confirmou ainda.</p>'; return; }
+    if(rows.length === 0){ wrap.innerHTML = '<p class="empty">Ninguém confirmou ainda.</p>'; return; }
     let html = '<table><thead><tr><th>Nome</th><th>WhatsApp</th><th>Confirmado em</th></tr></thead><tbody>';
     rows.forEach(function(r){
       html += '<tr><td>' + escapeHtml(r.nome) + '</td><td>' + escapeHtml(r.telefone) + '</td><td>' + escapeHtml(r.data) + '</td></tr>';
@@ -112,7 +112,7 @@ async function loadData(){
     wrap.innerHTML = html;
   }catch(err){
     console.error(err);
-    wrap.innerHTML = '<p class="empty">Erro ao carregar. Confere a configuracao do Firebase.</p>';
+    wrap.innerHTML = '<p class="empty">Erro ao carregar. Confere a configuração do Firebase.</p>';
   }
 }
 
